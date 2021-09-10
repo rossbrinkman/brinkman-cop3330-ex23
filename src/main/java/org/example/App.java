@@ -1,4 +1,5 @@
 package org.example;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 /*
@@ -10,22 +11,24 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "What is the first number? " );
-
+        DecimalFormat f = new DecimalFormat("##.00");
         Scanner scanner = new Scanner(System.in);
-        String first, second;
-        int firstNumber, secondNumber;
+        float principal, interestRate, years, finalValue;
 
-        first = scanner.nextLine();
-        firstNumber = Integer.parseInt(first);
+        System.out.println( "Enter the principal: " );
+        principal = scanner.nextFloat();
 
-        System.out.println( "What is the second number? " );
-        second = scanner.nextLine();
-        secondNumber = Integer.parseInt(second);
+        System.out.println( "Enter the rate of interest: " );
+        interestRate = scanner.nextFloat();
 
-        System.out.println( firstNumber + " + " + secondNumber + " = " + (firstNumber+secondNumber));
-        System.out.println( firstNumber + " - " + secondNumber + " = " + (firstNumber-secondNumber));
-        System.out.println( firstNumber + " * " + secondNumber + " = " + (firstNumber*secondNumber));
-        System.out.println( firstNumber + " / " + secondNumber + " = " + (firstNumber/secondNumber));
+        System.out.println( "Enter the number of years: " );
+        years = scanner.nextFloat();
+
+        interestRate /= 100;
+        finalValue = principal * (1 + interestRate*years);
+        interestRate *= 100;
+
+        System.out.println( "After " + (int)years + " years at " + interestRate +
+                "%, the investment will be worth $" + f.format(finalValue));
     }
 }
