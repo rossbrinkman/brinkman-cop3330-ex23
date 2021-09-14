@@ -1,5 +1,7 @@
 package org.example;
 import java.text.DecimalFormat;
+import java.util.Locale;
+import java.util.Objects;
 import java.util.Scanner;
 
 /*
@@ -11,47 +13,60 @@ public class App
 {
     public static void main( String[] args )
     {
-        DecimalFormat f = new DecimalFormat("#0.00####");
         Scanner scanner = new Scanner(System.in);
-        int maleOrFemale;
-        float ouncesAlcohol, weight, hoursSinceLastDrink, alcoholDistributionRatio, bloodAlcoholContent;
         String currentInput;
 
-        System.out.println( "Enter a 1 if you are male or a 2 if you are female: " );
-        currentInput = scanner.nextLine();
-        try{
-            maleOrFemale = Integer.parseInt(currentInput);}
-        catch (NumberFormatException nfe){
-            System.out.println( "Input must be numeric" );
-            return;
-        }
+        System.out.println( "Is the car silent when you turn the key? " );
+        currentInput = scanner.nextLine().toLowerCase();
 
-        if(maleOrFemale == 1)
-            alcoholDistributionRatio = 0.73f;
-        else if (maleOrFemale == 2)
-            alcoholDistributionRatio = 0.66f;
+        if(Objects.equals(currentInput, "y"))
+        {
+            System.out.println( "Are the battery terminals corroded? " );
+            //scanner.next();
+            currentInput = scanner.nextLine().toLowerCase();
+
+            if(Objects.equals(currentInput, "y"))
+                System.out.println( "Clean the terminals and try starting again. " );
+            else
+                System.out.println( "Replace cables and try again " );
+        }
         else
         {
-            System.out.println( "Invalid Input" );
-            return;
+            System.out.println( "Does the car make a slicking noise? " );
+            //scanner.next();
+            currentInput = scanner.nextLine().toLowerCase();
+
+            if(Objects.equals(currentInput, "y"))
+                System.out.println( "Replace the battery. " );
+            else {
+                System.out.println("Does the car crank up but fail to start? ");
+                //scanner.next();
+                currentInput = scanner.nextLine().toLowerCase();
+
+                if(Objects.equals(currentInput, "y"))
+                    System.out.println( "Check spark plug connections. " );
+                else
+                {
+                    System.out.println("Does the engine start and then die? ");
+                    //scanner.next();
+                    currentInput = scanner.nextLine().toLowerCase();
+
+                    if(Objects.equals(currentInput, "y"))
+                    {
+                        System.out.println("Does your car have fuel injection? ");
+                        //scanner.next();
+                        currentInput = scanner.nextLine().toLowerCase();
+
+                        if(Objects.equals(currentInput, "y"))
+                            System.out.println("Get it in for service. ");
+                        else
+                            System.out.println("Check to ensure the choke is opening and closing. ");
+                    }
+                    else
+                        System.out.println( "This should not be possible. " );
+                }
+            }
         }
-
-        System.out.println( "How many ounces of alcohol did you have? " );
-        ouncesAlcohol = scanner.nextFloat();
-
-        System.out.println( "What is your weight in pounds? " );
-        weight = scanner.nextFloat();
-
-        System.out.println( "How many hours has it been since your last drink? " );
-        hoursSinceLastDrink = scanner.nextFloat();
-
-        bloodAlcoholContent = (ouncesAlcohol * 5.14f / weight * alcoholDistributionRatio) - .015f * hoursSinceLastDrink;
-
-        System.out.println( "Your BAC is " + f.format(bloodAlcoholContent));
-
-        String endString = bloodAlcoholContent >= .08f ? "It is not legal for you to drive" : "It is legal for you to drive";
-
-        System.out.println(endString);
 
         scanner.close();
     }
